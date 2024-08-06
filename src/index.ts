@@ -1,30 +1,46 @@
-import { app } from "./app"
-import { connect } from "mongoose";
+import { app } from "./app";
 import dotenv from "dotenv";
+import { initialize } from "./database/initialize";
+import { connectToDB } from "./database/connect";
 
 dotenv.config();
 const PORT = process.env.SERVER_PORT;
 const DB_URI = process.env.DB_URI;
+const args = process.argv.splice(2);
 
-const runServer = async (PORT: number, DB_URI: string) => {
-    try {
-        await connect(DB_URI);
-        console.log("DB Connection created!");
-        app.listen(PORT, () => {
-            console.log(`Server is Running on port:`, PORT);
-        });
-    } catch(error) {
-        console.log(error);
-    }
+const runServer = (PORT: number) => {
+    app.listen(PORT, () => {
+        console.log(`Server is Running on port:`, PORT);
+    });
 }
 
-if(DB_URI) {
+const main = async () => {
+    if(DB_URI) {
+        await connectToDB(DB_URI);
+    } else {
+        console.log("No DB URI provided, exiting!")
+        process.exit(1)
+    }
+
+    if(args.length > 0) {
+        if(args.length > 1) {
+            console.log("More than 1 arguments entered, exiting!");
+            process.exit(2);
+        } else {
+            switch(args[0].toLowerCase()) {
+                case "initialize": {
+                    await initialize();
+                    process.exit();
+                }
+            }
+        }
+    }
+    
     if(PORT) {
-        runServer(parseInt(PORT), DB_URI);
+        runServer(parseInt(PORT));
     } else {
         console.log("No port provided for server");
     }
-} else {
-    console.log("No database URI provided!");
 }
 
+main();

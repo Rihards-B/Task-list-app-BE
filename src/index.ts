@@ -30,7 +30,3 @@ const main = async () => {
 
 main();
 
-
-
-
-

@@ -16,3 +16,12 @@ export const createTask = async (req: Request, res: Response) => {
 
     res.status(200).json({"Message":"Task created!"});
 }
+
+export const getTasks = async (req: Request, res: Response) => {
+    try {
+        const tasks: Task[] = await taskService.getTasks();
+        res.status(200).json(tasks);
+    } catch(error) {
+        console.log("getTasks failed to retrieve tasks: ", error);
+    }
+}

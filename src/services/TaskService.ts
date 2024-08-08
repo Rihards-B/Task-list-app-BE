@@ -5,4 +5,8 @@ export class TaskService {
         task.createdOn = new Date();
         TaskModel.create(task);
     }
+
+    public getTasks = () => {
+        return TaskModel.find()
+    }
 }

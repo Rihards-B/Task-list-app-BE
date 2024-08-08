@@ -9,4 +9,8 @@ export class TaskService {
     public getTasks = () => {
         return TaskModel.find()
     }
+
+    public getTask = (id: string) => {
+        return TaskModel.findById(id);
+    }
 }

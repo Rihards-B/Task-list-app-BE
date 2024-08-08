@@ -1,10 +1,12 @@
 import { app } from "./app";
 import dotenv from "dotenv";
+import { initialize } from "./database/initialize";
 import { connectToDB } from "./database/connect";
 
 dotenv.config();
 const PORT = process.env.SERVER_PORT;
 const DB_URI = process.env.DB_URI;
+const args = process.argv.splice(2);
 
 const runServer = (PORT: number) => {
     app.listen(PORT, () => {
@@ -20,6 +22,19 @@ const main = async () => {
         process.exit(1)
     }
 
+    if(args.length > 0) {
+        if(args.length > 1) {
+            console.log("More than 1 arguments entered, exiting!");
+            process.exit(2);
+        } else {
+            switch(args[0].toLowerCase()) {
+                case "initialize": {
+                    await initialize();
+                    process.exit();
+                }
+            }
+        }
+    }
     
     if(PORT) {
         runServer(parseInt(PORT));
@@ -29,4 +44,3 @@ const main = async () => {
 }
 
 main();
-

@@ -22,7 +22,7 @@ export const getTasks = async (req: Request, res: Response) => {
 
 export const getTask = async (req: Request, res: Response) => {
     try {
-        const task: Task | null  = await taskService.getTask(req.params.id);
+        const task: Task | undefined  = await taskService.getTask(req.params.id);
         if(task) {
             res.status(200).json(task);
         } else {

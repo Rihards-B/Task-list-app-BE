@@ -1,3 +1,4 @@
+import { isValidObjectId } from "mongoose";
 import { Task, TaskModel } from "../models/Task"
 
 export class TaskService {
@@ -6,7 +7,21 @@ export class TaskService {
         TaskModel.create(task);
     }
 
-    public getTasks = () => {
-        return TaskModel.find()
+    public getTasks = async () => {
+        return await TaskModel.find()
+    }
+
+    public getTask = async (id: string) => {
+        try {
+            if(isValidObjectId(id)) {
+                const task = await TaskModel.findById(id);
+                if(task != undefined) {
+                    return task
+                }
+            }
+            return undefined;
+        } catch(error) {
+            console.log(error);
+        }
     }
 }

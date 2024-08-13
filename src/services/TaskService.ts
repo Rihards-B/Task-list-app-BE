@@ -10,7 +10,7 @@ export class TaskService {
         try {
             if (isValidObjectId(id)) {
                 const task = await TaskModel.findById(id);
-                if (task != undefined) {
+                if (task) {
                     return task
                 }
             }
@@ -41,10 +41,28 @@ export class TaskService {
                 const response = await TaskModel.findByIdAndDelete(id);
                 return response;
             } else {
-                console.log("Object ID is not valid!");
+                return null;
             }
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    public updateTask = async (task: Task): Promise<Task | Error.ValidationError | null> => {
+        try {
+            if (task._id) {
+                await TaskModel.validate(task);
+                const response = await TaskModel.findByIdAndUpdate(task._id, task);
+                return response;
+            }
+            return null;
+        } catch (error) {
+            if (error instanceof Error.ValidationError) {
+                return error;
+            } else {
+                console.log(error);
+                return null;
+            }
         }
     }
 }

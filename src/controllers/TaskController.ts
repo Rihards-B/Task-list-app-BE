@@ -16,12 +16,12 @@ export const createTask = async (req: Request, res: Response) => {
         if (taskRes) {
             if (taskRes instanceof Error.ValidationError) {
                 errors = formatErrors(taskRes);
-            }
-            if (errors) {
                 TaskResponses.CreationErrors(res, errors);
             } else {
                 TaskResponses.TaskCreated(res);
             }
+        } else {
+            TaskResponses.InternalServerError(res);
         }
     } catch (error) {
         console.log(error);

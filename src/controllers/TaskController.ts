@@ -1,24 +1,24 @@
 import { Request, Response } from "express";
-import { Task, TaskModel  } from "../models/Task";
-import {TaskService} from "../services/TaskService";
+import { Task } from "../models/Task";
+import { TaskService } from "../services/TaskService";
 import { Error } from "mongoose";
 import { formatErrors } from "../database/formatErrors";
+import { TaskResponses } from "../responses/TaskResponses";
 
 let taskService = new TaskService();
 
 export const createTask = async (req: Request, res: Response) => {
-    let errors: {[key: string]: string} | null = null;
+    let errors: { [key: string]: string } | null = null;
     const requestBody = await req.body;
     const taskRes: Error.ValidationError | Task | null = await taskService.createTask(requestBody);
-    if(taskRes) {
+    if (taskRes) {
         if (taskRes instanceof Error.ValidationError) {
             errors = formatErrors(taskRes);
         }
-
-        if(errors) {
-            res.status(400).json(errors);
+        if (errors) {
+            TaskResponses.CreationErrors(res, errors);
         } else {
-            res.status(200).json({"Message":"Task created!"});
+            TaskResponses.TaskCreated(res);
         }
     }
     res.status(500);
@@ -27,21 +27,34 @@ export const createTask = async (req: Request, res: Response) => {
 export const getTasks = async (req: Request, res: Response) => {
     try {
         const tasks: Task[] = await taskService.getTasks();
-        res.status(200).json(tasks);
-    } catch(error) {
+        TaskResponses.TasksFound(res, tasks);
+    } catch (error) {
         console.log("getTasks failed to retrieve tasks: ", error);
     }
 }
 
 export const getTask = async (req: Request, res: Response) => {
     try {
-        const task: Task | undefined  = await taskService.getTask(req.params.id);
-        if(task) {
-            res.status(200).json(task);
+        const task: Task | undefined = await taskService.getTask(req.params.id);
+        if (task) {
+            TaskResponses.TaskFound(res, task);
         } else {
-            res.status(404).send("Task with ID: "+req.params.id+" couldn't be found");
+            TaskResponses.TaskNotFoundID(res, req.params.id);
         }
-    } catch(error) {
+    } catch (error) {
         console.log("getTaskDetails failed: ", error);
+    }
+}
+
+export const deleteTask = async (req: Request, res: Response) => {
+    try {
+        const result = await taskService.deleteTask(req.params.id);
+        if (result) {
+            TaskResponses.TaskDeleted(res, req.params.id);
+        } else {
+            TaskResponses.TaskNotFoundID(res, req.params.id);
+        }
+    } catch (error) {
+        console.log(error);
     }
 }

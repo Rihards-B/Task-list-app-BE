@@ -8,30 +8,43 @@ export class TaskService {
 
     public getTask = async (id: string) => {
         try {
-            if(isValidObjectId(id)) {
+            if (isValidObjectId(id)) {
                 const task = await TaskModel.findById(id);
-                if(task != undefined) {
+                if (task != undefined) {
                     return task
                 }
             }
             return undefined;
-        } catch(error) {
+        } catch (error) {
             console.log(error);
         }
     }
 
     public createTask = async (task: Task): Promise<Task | Error.ValidationError | null> => {
-        try{
+        try {
             task.createdOn = new Date();
             await TaskModel.validate(task);
             return await TaskModel.create(task);
-        } catch(error) {
-            if(error instanceof Error.ValidationError){
+        } catch (error) {
+            if (error instanceof Error.ValidationError) {
                 return error;
             } else {
                 console.log(error);
                 return null;
             }
+        }
+    }
+
+    public deleteTask = async (id: string) => {
+        try {
+            if (isValidObjectId(id)) {
+                const response = await TaskModel.findByIdAndDelete(id);
+                return response;
+            } else {
+                console.log("Object ID is not valid!");
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 }

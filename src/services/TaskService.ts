@@ -3,7 +3,11 @@ import { Task, TaskModel } from "../models/Task"
 
 export class TaskService {
     public getTasks = async () => {
-        return await TaskModel.find()
+        try {
+            return await TaskModel.find()
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     public getTask = async (id: string) => {

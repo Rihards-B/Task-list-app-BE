@@ -11,6 +11,8 @@ export const initialize = async () => {
         await TaskModel.deleteMany();
         console.log("Creating dummy tasks");
         await TaskModel.create(tasksJson);
+        console.log("Dropping users table!");
+        await UserModel.deleteMany();
         console.log("Creating users");
         await UserModel.create(usersJson);
     } catch (error) {

@@ -6,10 +6,6 @@ export namespace TaskResponses {
         response.status(404).json({ "Message": "Task with ID: " + id + " not found!" });
     }
 
-    export const InvalidTaskID = (response: Response, id: string) => {
-        response.status(400).json({ "Message": "Invalid ID format: " + id + " !" });
-    }
-
     export const TaskDeleted = (response: Response, id: string) => {
         response.status(200).json({ "Message": "Task " + id + " Deleted!" });
     }
@@ -32,9 +28,5 @@ export namespace TaskResponses {
 
     export const TaskUpdated = (response: Response) => {
         response.status(200).json({ "Message": "Task updated!" })
-    }
-
-    export const InternalServerError = (response: Response) => {
-        response.status(500).json({ "Message": "Server error" });
     }
 }

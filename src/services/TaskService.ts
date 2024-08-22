@@ -26,6 +26,7 @@ export class TaskService {
 
     public createTask = async (task: Task): Promise<Task | Error.ValidationError | null> => {
         try {
+            task.assignedTo = "UNASSIGNED";
             task.createdOn = new Date();
             await TaskModel.validate(task);
             return await TaskModel.create(task);

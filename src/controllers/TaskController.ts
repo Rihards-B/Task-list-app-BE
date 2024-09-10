@@ -8,20 +8,26 @@ import { TaskResponses } from "../responses/TaskResponses";
 let taskService = new TaskService();
 
 export const createTask = async (req: Request, res: Response) => {
-    let errors: { [key: string]: string } | null = null;
-    const requestBody = await req.body;
-    const taskRes: Error.ValidationError | Task | null = await taskService.createTask(requestBody);
-    if (taskRes) {
-        if (taskRes instanceof Error.ValidationError) {
-            errors = formatErrors(taskRes);
-        }
-        if (errors) {
-            TaskResponses.CreationErrors(res, errors);
+    try {
+        let errors: { [key: string]: string } | null = null;
+        const requestBody = await req.body;
+        requestBody._id = null;
+        const taskRes: Error.ValidationError | Task | null = await taskService.createTask(requestBody);
+        if (taskRes) {
+            if (taskRes instanceof Error.ValidationError) {
+                errors = formatErrors(taskRes);
+                TaskResponses.CreationErrors(res, errors);
+            } else {
+                TaskResponses.TaskCreated(res);
+            }
         } else {
-            TaskResponses.TaskCreated(res);
+            TaskResponses.InternalServerError(res);
         }
+    } catch (error) {
+        console.log(error);
+        TaskResponses.InternalServerError(res);
     }
-    res.status(500);
+
 }
 
 export const getTasks = async (req: Request, res: Response) => {
@@ -30,6 +36,7 @@ export const getTasks = async (req: Request, res: Response) => {
         TaskResponses.TasksFound(res, tasks);
     } catch (error) {
         console.log("getTasks failed to retrieve tasks: ", error);
+        TaskResponses.InternalServerError(res);
     }
 }
 
@@ -43,6 +50,7 @@ export const getTask = async (req: Request, res: Response) => {
         }
     } catch (error) {
         console.log("getTaskDetails failed: ", error);
+        TaskResponses.InternalServerError(res);
     }
 }
 
@@ -56,5 +64,29 @@ export const deleteTask = async (req: Request, res: Response) => {
         }
     } catch (error) {
         console.log(error);
+        TaskResponses.InternalServerError(res);
+    }
+}
+
+export const updateTask = async (req: Request, res: Response) => {
+    try {
+        let errors: { [key: string]: string } | null = null;
+        const requestBody = await req.body;
+        const taskRes: Error.ValidationError | Task | null = await taskService.updateTask(requestBody);
+        if (taskRes) {
+            if (taskRes instanceof Error.ValidationError) {
+                errors = formatErrors(taskRes);
+            }
+            if (errors) {
+                TaskResponses.CreationErrors(res, errors);
+            } else {
+                TaskResponses.TaskUpdated(res);
+            }
+        } else {
+            TaskResponses.TaskNotFoundID(res, req.body._id);
+        }
+    } catch (error) {
+        console.log(error);
+        TaskResponses.InternalServerError(res);
     }
 }

@@ -29,4 +29,12 @@ export namespace TaskResponses {
     export const TaskFound = (response: Response, task: Task) => {
         response.status(200).json(task);
     }
+
+    export const TaskUpdated = (response: Response) => {
+        response.status(200).json({ "Message": "Task updated!" })
+    }
+
+    export const InternalServerError = (response: Response) => {
+        response.status(500).json({ "Message": "Server error" });
+    }
 }

@@ -1,5 +1,5 @@
 import { json, Router } from 'express';
-import { createTask, deleteTask, getTask, getTasks } from '../controllers/TaskController';
+import { createTask, deleteTask, getTask, getTasks, updateTask } from '../controllers/TaskController';
 
 export const taskRoutes = Router();
 
@@ -9,3 +9,4 @@ taskRoutes.get("/", getTasks);
 taskRoutes.get('/:id', getTask);
 taskRoutes.post('/', createTask);
 taskRoutes.delete('/:id', deleteTask);
+taskRoutes.put('/', updateTask);

@@ -2,7 +2,7 @@ import { ObjectId, Schema, model } from 'mongoose';
 
 // 1. Create an interface representing a document in MongoDB.
 export interface Task {
-  _id?: ObjectId;
+  _id: ObjectId;
   title: string;
   description?: string;
   createdOn?: Date;

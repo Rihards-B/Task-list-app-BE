@@ -9,4 +9,12 @@ export namespace UserResponses {
     export const UserFound = (response: Response, user: User) => {
         response.status(200).json(user);
     }
+
+    export const CurrentUser = (response: Response, user: User) => {
+        response.status(200).json(user);
+    }
+
+    export const UserNotFound = (response: Response) => {
+        response.status(404).json({ "msg": "User not found!" });
+    }
 }

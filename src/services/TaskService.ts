@@ -3,7 +3,11 @@ import { Task, TaskModel } from "../models/Task"
 
 export class TaskService {
     public getTasks = async () => {
-        return await TaskModel.find()
+        try {
+            return await TaskModel.find()
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     public getTask = async (id: string) => {
@@ -22,6 +26,7 @@ export class TaskService {
 
     public createTask = async (task: Task): Promise<Task | Error.ValidationError | null> => {
         try {
+            task.assignedTo = "UNASSIGNED";
             task.createdOn = new Date();
             await TaskModel.validate(task);
             return await TaskModel.create(task);

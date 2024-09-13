@@ -4,6 +4,7 @@ import { TaskService } from "../services/TaskService";
 import { Error } from "mongoose";
 import { formatErrors } from "../database/formatErrors";
 import { TaskResponses } from "../responses/TaskResponses";
+import { SharedResponses } from "../responses/SharedResponses";
 
 let taskService = new TaskService();
 
@@ -21,22 +22,25 @@ export const createTask = async (req: Request, res: Response) => {
                 TaskResponses.TaskCreated(res);
             }
         } else {
-            TaskResponses.InternalServerError(res);
+            console.log("No result from task service");
+            SharedResponses.InternalServerError(res);
         }
     } catch (error) {
         console.log(error);
-        TaskResponses.InternalServerError(res);
+        SharedResponses.InternalServerError(res);
     }
 
 }
 
 export const getTasks = async (req: Request, res: Response) => {
     try {
-        const tasks: Task[] = await taskService.getTasks();
-        TaskResponses.TasksFound(res, tasks);
+        const tasks: Task[] | undefined = await taskService.getTasks();
+        if (tasks) {
+            TaskResponses.TasksFound(res, tasks);
+        }
     } catch (error) {
         console.log("getTasks failed to retrieve tasks: ", error);
-        TaskResponses.InternalServerError(res);
+        SharedResponses.InternalServerError(res);
     }
 }
 
@@ -50,7 +54,7 @@ export const getTask = async (req: Request, res: Response) => {
         }
     } catch (error) {
         console.log("getTaskDetails failed: ", error);
-        TaskResponses.InternalServerError(res);
+        SharedResponses.InternalServerError(res);
     }
 }
 
@@ -64,7 +68,7 @@ export const deleteTask = async (req: Request, res: Response) => {
         }
     } catch (error) {
         console.log(error);
-        TaskResponses.InternalServerError(res);
+        SharedResponses.InternalServerError(res);
     }
 }
 
@@ -87,6 +91,6 @@ export const updateTask = async (req: Request, res: Response) => {
         }
     } catch (error) {
         console.log(error);
-        TaskResponses.InternalServerError(res);
+        SharedResponses.InternalServerError(res);
     }
 }

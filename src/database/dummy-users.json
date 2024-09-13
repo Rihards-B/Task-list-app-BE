@@ -1,0 +1,23 @@
+[
+    {
+        "_id": null,
+        "username": "Rihards-B",
+        "password": "password",
+        "first_name": "Rihards",
+        "last_name": "Blekus"
+    },
+    {
+        "_id": null,
+        "username": "John321",
+        "password": "password",
+        "first_name": "John",
+        "last_name": "Gill"
+    },
+    {
+        "_id": null,
+        "username": "RobQ",
+        "password": "password",
+        "first_name": "Robin",
+        "last_name": "Quinn"
+    }
+]

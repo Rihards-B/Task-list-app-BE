@@ -1,5 +1,7 @@
 import { TaskModel } from "../models/Task";
+import { UserModel } from "../models/User";
 import tasksJson from "./dummy-tasks.json";
+import usersJson from "./dummy-users.json";
 
 export const initialize = async () => {
     //const tasks: Task[] = tasksJson;
@@ -9,7 +11,11 @@ export const initialize = async () => {
         await TaskModel.deleteMany();
         console.log("Creating dummy tasks");
         await TaskModel.create(tasksJson);
-    } catch(error) {
+        console.log("Dropping users table!");
+        await UserModel.deleteMany();
+        console.log("Creating users");
+        await UserModel.create(usersJson);
+    } catch (error) {
         console.log("Initialization failed: ", error);
     }
     console.log("Initialization finished!");

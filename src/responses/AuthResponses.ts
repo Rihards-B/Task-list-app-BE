@@ -13,4 +13,8 @@ export namespace AuthResponses {
     export const NotAuthorized = (response: Response) => {
         response.status(401).json({ "msg": "Unauthorized" });
     }
+
+    export const UsernameTaken = (response: Response) => {
+        response.status(400).json({ "msg": "Username is already taken" });
+    }
 }

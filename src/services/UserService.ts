@@ -52,8 +52,7 @@ export class UserService {
                     first_name: first_name,
                     last_name: last_name
                 }
-                await UserModel.create(user);
-                return user;
+                return await UserModel.create(user);
             }
         } catch (error) {
             console.log(error);

@@ -6,8 +6,8 @@ export namespace AuthResponses {
         response.json({ "isLoggedIn": true, "username": username });
     }
 
-    export const InvalidCredentials = (response: Response) => {
-        response.status(200).json({ "isLoggedIn": false, "username": "" });
+    export const InvalidCredentials = (response: Response, errors?: Object) => {
+        response.status(200).json({ "isLoggedIn": false, "username": "", "errors": errors });
     }
 
     export const NotAuthorized = (response: Response) => {
@@ -15,6 +15,12 @@ export namespace AuthResponses {
     }
 
     export const UsernameTaken = (response: Response) => {
-        response.status(400).json({ "msg": "Username is already taken" });
+        response.status(400).json(
+            {
+                "messages": [
+                    "Username is already taken"
+                ]
+            }
+        );
     }
 }

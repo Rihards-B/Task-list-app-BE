@@ -20,13 +20,16 @@ export const login = BaseEndpoint(async (req: Request, res: Response) => {
     if (user) {
         const secret: string | undefined = process.env.SESSION_SECRET;
         let correctPassword = false;
-        correctPassword = await bcrypt.compare(data.password, user.password)
+        correctPassword = await bcrypt.compare(data.password, user.password);
+
         let token: string | undefined = undefined;
 
-        if (secret && correctPassword) {
-            token = await authService.getToken(secret, user);
-            AuthResponses.LoggedIn(res, token, user.username);
-            return;
+        if (secret) {
+            if (correctPassword) {
+                token = authService.getToken(secret, user);
+                AuthResponses.LoggedIn(res, token, user.username);
+                return;
+            }
         }
     }
     AuthResponses.InvalidCredentials(res);

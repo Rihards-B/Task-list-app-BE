@@ -24,7 +24,9 @@ export const login = BaseEndpoint(async (req: Request, res: Response) => {
 
         if (secret && correctPassword) {
             token = await authService.getToken(secret, user);
-            AuthResponses.LoggedIn(res, token, user.username);
+            // Sanitizing user object for response
+            user.password = "";
+            AuthResponses.LoggedIn(res, token, user);
             return;
         }
     }
@@ -32,6 +34,5 @@ export const login = BaseEndpoint(async (req: Request, res: Response) => {
 })
 
 export const logout = BaseEndpoint((req: Request, res: Response) => {
-    res.clearCookie("authJWT", { httpOnly: true });
-    res.json({ "msg": "Logged out!" });
+    AuthResponses.LoggedOut(res);
 })

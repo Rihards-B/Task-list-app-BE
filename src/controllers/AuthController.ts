@@ -24,20 +24,19 @@ export const login = BaseEndpoint(async (req: Request, res: Response) => {
 
         let token: string | undefined = undefined;
 
-        if (secret) {
-            if (correctPassword) {
-                token = authService.getToken(secret, user);
-                AuthResponses.LoggedIn(res, token, user.username);
-                return;
-            }
+        if (secret && correctPassword) {
+            token = await authService.getToken(secret, user);
+            // Sanitizing user object for response
+            user.password = "";
+            AuthResponses.LoggedIn(res, token, user);
+            return;
         }
     }
     AuthResponses.InvalidCredentials(res);
 })
 
 export const logout = BaseEndpoint((req: Request, res: Response) => {
-    res.clearCookie("authJWT", { httpOnly: true });
-    res.json({ "msg": "Logged out!" });
+    AuthResponses.LoggedOut(res);
 })
 
 export const register = BaseEndpoint(async (req: Request, res: Response) => {
@@ -52,7 +51,8 @@ export const register = BaseEndpoint(async (req: Request, res: Response) => {
 
     if (user && secret) {
         const token = authService.getToken(secret, user);
-        AuthResponses.LoggedIn(res, token, user.username);
+        user.password = ""
+        AuthResponses.LoggedIn(res, token, user);
         return;
     }
 

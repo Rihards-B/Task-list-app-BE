@@ -1,13 +1,14 @@
 import { Response } from "express";
+import { User } from "../models/User";
 
 export namespace AuthResponses {
-    export const LoggedIn = (response: Response, token: string, username: string) => {
+    export const LoggedIn = (response: Response, token: string, user: User) => {
         response.status(200).cookie("authJWT", token, { httpOnly: true });
-        response.json({ "isLoggedIn": true, "username": username });
+        response.json({ "isLoggedIn": true, "user": user });
     }
 
-    export const InvalidCredentials = (response: Response, errors?: Object) => {
-        response.status(200).json({ "isLoggedIn": false, "username": "", "errors": errors });
+    export const InvalidCredentials = (response: Response) => {
+        response.status(200).json({ "isLoggedIn": false });
     }
 
     export const NotAuthorized = (response: Response) => {
@@ -22,5 +23,10 @@ export namespace AuthResponses {
                 ]
             }
         );
+    }
+
+    export const LoggedOut = (response: Response) => {
+        response.clearCookie("authJWT", { httpOnly: true });
+        response.json({ "msg": "Logged out!" });
     }
 }

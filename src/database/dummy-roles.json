@@ -1,0 +1,14 @@
+[
+    {
+        "_id": null,
+        "role_name": "User"
+    },
+    {
+        "_id": null,
+        "role_name": "Manager"
+    },
+    {
+        "_id": null,
+        "role_name": "Admin"
+    }
+]

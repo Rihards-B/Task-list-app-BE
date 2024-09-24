@@ -13,14 +13,14 @@ export const initialize = async () => {
         await TaskModel.deleteMany();
         console.log("Creating dummy tasks");
         await TaskModel.create(tasksJson);
-        console.log("Dropping users table!");
-        await UserModel.deleteMany();
-        console.log("Creating users");
-        await UserModel.create(usersJson);
         console.log("Dropping roles table");
         await RoleModel.deleteMany();
         console.log("Creating roles");
         await RoleModel.create(rolesJson);
+        console.log("Dropping users table!");
+        await UserModel.deleteMany();
+        console.log("Creating users");
+        await UserModel.create(usersJson);
     } catch (error) {
         console.log("Initialization failed: ", error);
     }

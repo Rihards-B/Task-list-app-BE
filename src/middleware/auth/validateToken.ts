@@ -8,16 +8,15 @@ dotenv.config();
 
 export const validateToken = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const result = validationResult(req);
-    if (result.isEmpty()) {
+    if (req.cookies.authJWT) {
       const SESSION_SECRET = process.env.SESSION_SECRET;
       if (SESSION_SECRET) {
-        jwt.verify(req.cookies.authJWT, SESSION_SECRET)
+        jwt.verify(req.cookies.authJWT, SESSION_SECRET);
         next();
+        return;
       }
-    } else {
-      AuthResponses.NotAuthorized(res);
     }
+    AuthResponses.NotAuthorized(res);
   } catch (error) {
     console.log(error);
   }

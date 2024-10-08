@@ -46,8 +46,9 @@ export class UserService {
 
     public createUser = async (username: string, password: string, first_name: string, last_name: string) => {
         try {
-            const role: Role = await RoleModel.find({ role_name: "User" }).cast(RoleModel);
-            if (!(await this.getUserByUsername(username))) {
+            const role: Role | null = await RoleModel.findOne({ role_name: "User" }, "_id role_name");
+            console.log(role);
+            if (!(await this.getUserByUsername(username)) && role) {
                 const user: User = {
                     username: username,
                     password: password,
@@ -60,5 +61,9 @@ export class UserService {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    public updateUser = async (userId: string, user: User) => {
+        await UserModel.findByIdAndUpdate(userId, user);
     }
 }

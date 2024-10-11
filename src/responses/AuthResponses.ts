@@ -1,4 +1,4 @@
-import { response, Response } from "express";
+import { Response } from "express";
 import { User } from "../models/User";
 
 export namespace AuthResponses {
@@ -13,6 +13,16 @@ export namespace AuthResponses {
 
     export const NotAuthorized = (response: Response) => {
         response.status(401).json({ "msg": "Unauthorized" });
+    }
+
+    export const UsernameTaken = (response: Response) => {
+        response.status(400).json(
+            {
+                "messages": [
+                    "Username is already taken"
+                ]
+            }
+        );
     }
 
     export const LoggedOut = (response: Response) => {

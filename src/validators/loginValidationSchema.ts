@@ -15,6 +15,9 @@ export const LoginValidationSchema = {
         }
     },
     password: {
+        isString: {
+            errorMessage: "Password must be a string"
+        },
         notEmpty: {
             errorMessage: "Password cannot be empty"
         },

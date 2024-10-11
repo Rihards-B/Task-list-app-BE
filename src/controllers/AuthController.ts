@@ -7,6 +7,7 @@ import { AuthService } from "../services/AuthService";
 import { BaseEndpoint } from "./BaseController";
 import { AuthResponses } from "../responses/AuthResponses";
 import dotenv from "dotenv";
+import { SharedResponses } from "../responses/SharedResponses";
 
 dotenv.config();
 
@@ -19,7 +20,8 @@ export const login = BaseEndpoint(async (req: Request, res: Response) => {
     if (user) {
         const secret: string | undefined = process.env.SESSION_SECRET;
         let correctPassword = false;
-        correctPassword = await bcrypt.compare(data.password, user.password)
+        correctPassword = await bcrypt.compare(data.password, user.password);
+
         let token: string | undefined = undefined;
 
         if (secret && correctPassword) {
@@ -35,4 +37,29 @@ export const login = BaseEndpoint(async (req: Request, res: Response) => {
 
 export const logout = BaseEndpoint((req: Request, res: Response) => {
     AuthResponses.LoggedOut(res);
+})
+
+export const register = BaseEndpoint(async (req: Request, res: Response) => {
+    const secret: string | undefined = process.env.SESSION_SECRET;
+    const data = matchedData(req);
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+    const user = await userService.createUser(data.username,
+        hashedPassword,
+        data.first_name,
+        data.last_name
+    );
+
+    if (user && secret) {
+        const token = authService.getToken(secret, user);
+        user.password = ""
+        AuthResponses.LoggedIn(res, token, user);
+        return;
+    }
+
+    if (!user) {
+        AuthResponses.UsernameTaken(res);
+        return;
+    }
+
+    SharedResponses.InternalServerError(res);
 })

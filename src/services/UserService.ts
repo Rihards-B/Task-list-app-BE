@@ -1,5 +1,5 @@
 import { isValidObjectId } from "mongoose";
-import { UserModel } from "../models/User"
+import { UserModel, User } from "../models/User"
 import jwt from "jsonwebtoken";
 import { JWT } from "../models/JWT";
 
@@ -41,5 +41,21 @@ export class UserService {
     public getUserIdFromToken(token: string): string {
         const userJWT: JWT = <JWT>jwt.decode(token);
         return userJWT.userID;
+    }
+
+    public createUser = async (username: string, password: string, first_name: string, last_name: string) => {
+        try {
+            if (!(await this.getUserByUsername(username))) {
+                const user: User = {
+                    username: username,
+                    password: password,
+                    first_name: first_name,
+                    last_name: last_name
+                }
+                return await UserModel.create(user);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

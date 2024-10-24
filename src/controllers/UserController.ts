@@ -3,6 +3,7 @@ import { User } from "../models/User";
 import { UserResponses } from "../responses/UserResponses";
 import { UserService } from "../services/UserService";
 import { BaseEndpoint } from "./BaseController";
+import { matchedData } from "express-validator";
 
 let userService = new UserService();
 
@@ -33,4 +34,10 @@ export const currentUser = BaseEndpoint(async (req: Request, res: Response) => {
     } else {
         UserResponses.UserNotFound(res);
     }
+})
+
+export const updateUser = BaseEndpoint(async (req: Request, res: Response) => {
+    const data: User = matchedData(req);
+    await userService.updateUser(req.params.id, data)
+    res.status(200).json(data);
 })

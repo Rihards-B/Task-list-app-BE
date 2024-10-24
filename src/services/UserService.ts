@@ -2,6 +2,7 @@ import { isValidObjectId } from "mongoose";
 import { UserModel, User } from "../models/User"
 import jwt from "jsonwebtoken";
 import { JWT } from "../models/JWT";
+import { Role, RoleModel } from "../models/Role";
 
 export class UserService {
     public getUsers = async () => {
@@ -43,19 +44,26 @@ export class UserService {
         return userJWT.userID;
     }
 
-    public createUser = async (username: string, password: string, first_name: string, last_name: string) => {
+    public createUser = async (username: string, password: string, firstName: string, lastName: string) => {
         try {
-            if (!(await this.getUserByUsername(username))) {
+            const role: Role | null = await RoleModel.findOne({ roleName: "User" }, "_id roleName");
+            console.log(role);
+            if (!(await this.getUserByUsername(username)) && role) {
                 const user: User = {
                     username: username,
                     password: password,
-                    first_name: first_name,
-                    last_name: last_name
+                    firstName: firstName,
+                    lastName: lastName,
+                    roles: [role]
                 }
                 return await UserModel.create(user);
             }
         } catch (error) {
             console.log(error);
         }
+    }
+
+    public updateUser = async (userId: string, user: User) => {
+        await UserModel.findByIdAndUpdate(userId, user);
     }
 }

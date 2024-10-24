@@ -29,7 +29,7 @@ export const RegistrationValidationSchema = {
             errorMessage: "Password must be 6-64 characters long"
         }
     },
-    first_name: {
+    firstName: {
         isString: {
             errorMessage: "First name must be a string"
         },
@@ -43,7 +43,7 @@ export const RegistrationValidationSchema = {
             errorMessage: "First name must be less than 64 characters long"
         }
     },
-    last_name: {
+    lastName: {
         isString: {
             errorMessage: "Last name must be a string"
         },

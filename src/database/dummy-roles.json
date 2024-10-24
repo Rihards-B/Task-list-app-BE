@@ -1,14 +1,14 @@
 [
     {
         "_id": "66f13e501881fa27eb859e67",
-        "role_name": "User"
+        "roleName": "User"
     },
     {
         "_id": "66f13e501881fa27eb859e69",
-        "role_name": "Manager"
+        "roleName": "Manager"
     },
     {
         "_id": "66f13e501881fa27eb859e65",
-        "role_name": "Admin"
+        "roleName": "Admin"
     }
 ]

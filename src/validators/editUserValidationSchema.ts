@@ -16,7 +16,7 @@ export const EditUserValidationSchema = {
             errorMessage: "Username must be 4-24 characters long"
         }
     },
-    first_name: {
+    firstName: {
         isString: {
             errorMessage: "First name must be a string"
         },
@@ -30,7 +30,7 @@ export const EditUserValidationSchema = {
             errorMessage: "First name must be less than 64 characters long"
         }
     },
-    last_name: {
+    lastName: {
         isString: {
             errorMessage: "Last name must be a string"
         },
@@ -55,7 +55,7 @@ export const EditUserValidationSchema = {
             errorMessage: "Roles cannot be empty"
         },
     },
-    'roles.*.role_name': {
+    'roles.*.roleName': {
         notEmpty: {
             errorMessage: "Role must have a name"
         },

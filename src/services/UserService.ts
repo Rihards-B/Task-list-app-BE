@@ -46,15 +46,13 @@ export class UserService {
 
     public createUser = async (username: string, password: string, firstName: string, lastName: string) => {
         try {
-            const role: Role | null = await RoleModel.findOne({ roleName: "User" }, "_id roleName");
-            console.log(role);
-            if (!(await this.getUserByUsername(username)) && role) {
+            if (!(await this.getUserByUsername(username))) {
                 const user: User = {
                     username: username,
                     password: password,
                     firstName: firstName,
                     lastName: lastName,
-                    roles: [role]
+                    roles: ["User"]
                 }
                 return await UserModel.create(user);
             }

@@ -1,5 +1,3 @@
-import { isObjectIdOrHexString } from "mongoose";
-
 export const EditUserValidationSchema = {
     username: {
         isString: {
@@ -54,21 +52,5 @@ export const EditUserValidationSchema = {
         notEmpty: {
             errorMessage: "Roles cannot be empty"
         },
-    },
-    'roles.*.roleName': {
-        notEmpty: {
-            errorMessage: "Role must have a name"
-        },
-        isString: {
-            errorMessage: "Role name must be a string"
-        }
-    },
-    'roles.*._id': {
-        notEmpty: {
-            errorMessage: "Role must have an _id"
-        },
-        isMongoId: {
-            errorMessage: "Invalid _id format"
-        }
     }
 }

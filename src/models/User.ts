@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-import { Role } from './Role';
 
 // 1. Create an interface representing a document in MongoDB.
 export interface User {
@@ -8,7 +7,7 @@ export interface User {
     password: string,
     firstName: string,
     lastName: string,
-    roles: Role[]
+    roles: string[]
 }
 
 // 2. Create a Schema corresponding to the document interface.
@@ -17,7 +16,7 @@ const userSchema = new Schema<User>({
     password: { type: String, required: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    roles: { type: Schema.Types.Mixed, required: true }
+    roles: { type: [String], required: true }
 });
 
 // 3. Create a Model.

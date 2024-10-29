@@ -44,7 +44,7 @@ export const validateToken = (roleName?: string) => {
 }
 
 async function checkRole(user: User, roleName: string): Promise<boolean> {
-  if (user.roles.find(role => role.roleName == "Admin")) {
+  if (user.roles.find(role => role == "Admin")) {
     return true;
   }
   return false

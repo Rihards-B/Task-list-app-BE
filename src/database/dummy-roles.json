@@ -1,11 +1,11 @@
 [
     {
-        "roleName": "User"
+        "name": "User"
     },
     {
-        "roleName": "Manager"
+        "name": "Manager"
     },
     {
-        "roleName": "Admin"
+        "name": "Admin"
     }
 ]

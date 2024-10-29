@@ -4,6 +4,7 @@ import { UserResponses } from "../responses/UserResponses";
 import { UserService } from "../services/UserService";
 import { BaseEndpoint } from "./BaseController";
 import { matchedData } from "express-validator";
+import { RoleModel } from "../models/Role";
 
 let userService = new UserService();
 
@@ -38,6 +39,15 @@ export const currentUser = BaseEndpoint(async (req: Request, res: Response) => {
 
 export const updateUser = BaseEndpoint(async (req: Request, res: Response) => {
     const data: User = matchedData(req);
+    // Fetching valid roles from DB
+    const dbRoles: string[] = (await RoleModel.find()).map(role => role.name);
+    // Check if the passed in roles from FE exist
+    data.roles.forEach(role => {
+        if (!dbRoles.includes(role)) {
+            UserResponses.InvalidRole(res, role);
+            return;
+        }
+    })
     await userService.updateUser(req.params.id, data)
-    res.status(200).json(data);
+    UserResponses.UserUpdated(res, data);
 })

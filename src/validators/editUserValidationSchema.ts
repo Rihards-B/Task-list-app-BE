@@ -1,4 +1,4 @@
-export const RegistrationValidationSchema = {
+export const EditUserValidationSchema = {
     username: {
         isString: {
             errorMessage: "Username must be a string"
@@ -12,21 +12,6 @@ export const RegistrationValidationSchema = {
                 max: 24
             },
             errorMessage: "Username must be 4-24 characters long"
-        }
-    },
-    password: {
-        isString: {
-            errorMessage: "Password must be a string"
-        },
-        notEmpty: {
-            errorMessage: "Password cannot be empty"
-        },
-        isLength: {
-            options: {
-                min: 6,
-                max: 64
-            },
-            errorMessage: "Password must be 6-64 characters long"
         }
     },
     firstName: {
@@ -56,5 +41,16 @@ export const RegistrationValidationSchema = {
             },
             errorMessage: "Last name must be less than 64 characters long"
         }
+    },
+    roles: {
+        isArray: {
+            options: {
+                min: 1
+            },
+            errorMessage: "Roles must be in an array form and can't be empty"
+        },
+        notEmpty: {
+            errorMessage: "Roles cannot be empty"
+        },
     }
 }

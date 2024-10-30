@@ -5,16 +5,18 @@ export interface User {
     _id?: string,
     username: string,
     password: string,
-    first_name: string,
-    last_name: string
+    firstName: string,
+    lastName: string,
+    roles: string[]
 }
 
 // 2. Create a Schema corresponding to the document interface.
 const userSchema = new Schema<User>({
     username: { type: String, required: true },
     password: { type: String, required: true },
-    first_name: { type: String, required: true },
-    last_name: { type: String, required: true }
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    roles: { type: [String], required: true }
 });
 
 // 3. Create a Model.

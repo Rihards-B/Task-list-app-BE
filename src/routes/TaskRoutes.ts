@@ -6,8 +6,8 @@ import { AuthValidationSchema } from '../validators/authValidationSchema';
 
 export const taskRoutes = Router();
 
-taskRoutes.get("/", checkSchema(AuthValidationSchema), validateToken, getTasks);
-taskRoutes.get('/:id', checkSchema(AuthValidationSchema), validateToken, getTask);
+taskRoutes.get("/", checkSchema(AuthValidationSchema), validateToken(), getTasks);
+taskRoutes.get('/:id', checkSchema(AuthValidationSchema), validateToken(), getTask);
 taskRoutes.post('/', createTask);
 taskRoutes.delete('/:id', deleteTask);
 taskRoutes.put('/', updateTask);

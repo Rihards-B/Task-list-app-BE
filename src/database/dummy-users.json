@@ -3,21 +3,30 @@
         "_id": null,
         "username": "Rihards-B",
         "password": "$2b$10$AeBAOtgGJxxRcUvrq/j7R.XSrGr9kXksjpxXzrOBDzvIQyx05YSj.",
-        "first_name": "Rihards",
-        "last_name": "Blekus"
+        "firstName": "Rihards",
+        "lastName": "Blekus",
+        "roles": [
+            "User", "Admin"
+        ]
     },
     {
         "_id": null,
         "username": "John321",
         "password": "$2b$10$AeBAOtgGJxxRcUvrq/j7R.XSrGr9kXksjpxXzrOBDzvIQyx05YSj.",
-        "first_name": "John",
-        "last_name": "Gill"
+        "firstName": "John",
+        "lastName": "Gill",
+        "roles": [
+            "User"
+        ]
     },
     {
         "_id": null,
         "username": "RobQ",
         "password": "$2b$10$AeBAOtgGJxxRcUvrq/j7R.XSrGr9kXksjpxXzrOBDzvIQyx05YSj.",
-        "first_name": "Robin",
-        "last_name": "Quinn"
+        "firstName": "Robin",
+        "lastName": "Quinn",
+        "roles": [
+            "User", "Manager"
+        ]
     }
 ]

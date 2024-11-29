@@ -1,12 +1,11 @@
 import { model, Schema } from "mongoose";
 
 export interface Role {
-    _id?: string,
-    role_name: string
+    name: string
 }
 
 const roleSchema = new Schema<Role>({
-    role_name: { type: String, required: true },
+    name: { type: String, required: true, unique: true },
 });
 
 export const RoleModel = model<Role>('Role', roleSchema);

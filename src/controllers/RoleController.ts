@@ -5,5 +5,5 @@ import { RoleResponses } from "../responses/RoleResponses";
 
 export const getRoles = BaseEndpoint(async (req: Request, res: Response) => {
     const roles = await RoleModel.find();
-    RoleResponses.RolesFound(res, roles);
+    RoleResponses.RolesFound(res, roles.map(role => role.name));
 })

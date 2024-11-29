@@ -44,17 +44,15 @@ export class UserService {
         return userJWT.userID;
     }
 
-    public createUser = async (username: string, password: string, first_name: string, last_name: string) => {
+    public createUser = async (username: string, password: string, firstName: string, lastName: string) => {
         try {
-            const role: Role | null = await RoleModel.findOne({ role_name: "User" }, "_id role_name");
-            console.log(role);
-            if (!(await this.getUserByUsername(username)) && role) {
+            if (!(await this.getUserByUsername(username))) {
                 const user: User = {
                     username: username,
                     password: password,
-                    first_name: first_name,
-                    last_name: last_name,
-                    roles: [role]
+                    firstName: firstName,
+                    lastName: lastName,
+                    roles: ["User"]
                 }
                 return await UserModel.create(user);
             }

@@ -44,12 +44,8 @@ export const validateToken = (roleName?: string) => {
 }
 
 async function checkRole(user: User, roleName: string): Promise<boolean> {
-  const roles = await RoleModel.find();
-  const adminRole = roles.find(role => role.role_name === roleName);
-  if (user && adminRole) {
-    if (user.roles.find(role => role._id == adminRole._id)) {
-      return true;
-    }
+  if (user.roles.find(role => role == "Admin")) {
+    return true;
   }
   return false
 }

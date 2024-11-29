@@ -1,8 +1,7 @@
 import { Response } from "express";
-import { Role } from "../models/Role";
 
 export namespace RoleResponses {
-    export const RolesFound = (response: Response, roles: Role[]) => {
+    export const RolesFound = (response: Response, roles: string[]) => {
         response.status(200).json(roles);
     }
 }

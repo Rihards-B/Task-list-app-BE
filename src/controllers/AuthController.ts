@@ -45,8 +45,8 @@ export const register = BaseEndpoint(async (req: Request, res: Response) => {
     const hashedPassword = await bcrypt.hash(data.password, 10);
     const user = await userService.createUser(data.username,
         hashedPassword,
-        data.first_name,
-        data.last_name
+        data.firstName,
+        data.lastName
     );
 
     if (user && secret) {

@@ -1,5 +1,3 @@
-import { isObjectIdOrHexString } from "mongoose";
-
 export const EditUserValidationSchema = {
     username: {
         isString: {
@@ -16,7 +14,7 @@ export const EditUserValidationSchema = {
             errorMessage: "Username must be 4-24 characters long"
         }
     },
-    first_name: {
+    firstName: {
         isString: {
             errorMessage: "First name must be a string"
         },
@@ -30,7 +28,7 @@ export const EditUserValidationSchema = {
             errorMessage: "First name must be less than 64 characters long"
         }
     },
-    last_name: {
+    lastName: {
         isString: {
             errorMessage: "Last name must be a string"
         },
@@ -54,21 +52,5 @@ export const EditUserValidationSchema = {
         notEmpty: {
             errorMessage: "Roles cannot be empty"
         },
-    },
-    'roles.*.role_name': {
-        notEmpty: {
-            errorMessage: "Role must have a name"
-        },
-        isString: {
-            errorMessage: "Role name must be a string"
-        }
-    },
-    'roles.*._id': {
-        notEmpty: {
-            errorMessage: "Role must have an _id"
-        },
-        isMongoId: {
-            errorMessage: "Invalid _id format"
-        }
     }
 }

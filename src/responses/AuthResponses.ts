@@ -8,7 +8,7 @@ export namespace AuthResponses {
     }
 
     export const InvalidCredentials = (response: Response) => {
-        response.status(200).json({ "isLoggedIn": false });
+        response.status(400).json({ "messages": "Invalid credentials" });
     }
 
     export const NotAuthorized = (response: Response) => {

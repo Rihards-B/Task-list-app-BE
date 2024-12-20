@@ -9,5 +9,5 @@ export const userRoutes = Router();
 
 userRoutes.get("/", getUsers);
 userRoutes.get("/current", checkSchema(AuthValidationSchema), validateToken(), currentUser);
-userRoutes.get("/:id", validateToken("Admin"), getUser);
-userRoutes.put("/:id", checkSchema(EditUserValidationSchema), validateToken("Admin"), updateUser);
+userRoutes.get("/:id", validateToken(["Admin"]), getUser);
+userRoutes.put("/:id", checkSchema(EditUserValidationSchema), validateToken(["Admin"]), updateUser);

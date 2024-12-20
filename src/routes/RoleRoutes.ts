@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { getRoles } from "../controllers/RoleController";
+import { validateToken } from "../middleware/auth/validateToken";
 
 export const roleRoutes = Router();
 
-roleRoutes.use("/", getRoles);
+roleRoutes.use("/", validateToken(["Adming", "Manager"]), getRoles);

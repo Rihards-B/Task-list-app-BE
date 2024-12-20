@@ -3,6 +3,7 @@ import { taskRoutes } from './routes/TaskRoutes';
 import { userRoutes } from './routes/UserRoutes';
 import { authRoutes } from './routes/AuthRoutes';
 import { roleRoutes } from './routes/RoleRoutes';
+import { groupRoutes } from './routes/GroupRoutes';
 
 export const routes = Router();
 
@@ -11,3 +12,4 @@ routes.use("/tasks", taskRoutes);
 routes.use("/users", userRoutes);
 routes.use("/auth", authRoutes);
 routes.use("/roles/", roleRoutes);
+routes.use("/groups/", groupRoutes);

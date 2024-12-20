@@ -14,10 +14,6 @@ export namespace TaskResponses {
         response.status(200).json({ "Message": "Task created!" });
     }
 
-    export const CreationErrors = (response: Response, errors: { [key: string]: string }) => {
-        response.status(400).json(errors);
-    }
-
     export const TasksFound = (response: Response, tasks: Task[]) => {
         response.status(200).json(tasks);
     }

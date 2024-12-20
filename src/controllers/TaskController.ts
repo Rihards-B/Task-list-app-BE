@@ -17,7 +17,7 @@ export const createTask = BaseEndpoint(async (req: Request, res: Response) => {
     if (taskRes) {
         if (taskRes instanceof Error.ValidationError) {
             errors = formatErrors(taskRes);
-            TaskResponses.CreationErrors(res, errors);
+            SharedResponses.CreationErrors(res, errors);
         } else {
             TaskResponses.TaskCreated(res);
         }
@@ -61,7 +61,7 @@ export const updateTask = BaseEndpoint(async (req: Request, res: Response) => {
             errors = formatErrors(taskRes);
         }
         if (errors) {
-            TaskResponses.CreationErrors(res, errors);
+            SharedResponses.CreationErrors(res, errors);
         } else {
             TaskResponses.TaskUpdated(res);
         }

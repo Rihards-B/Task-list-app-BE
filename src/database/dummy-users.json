@@ -7,6 +7,9 @@
         "lastName": "Blekus",
         "roles": [
             "User", "Admin"
+        ],
+        "groups": [
+            "Group A", "Group B"
         ]
     },
     {
@@ -17,7 +20,8 @@
         "lastName": "Gill",
         "roles": [
             "User"
-        ]
+        ],
+        "groups": []
     },
     {
         "_id": null,
@@ -27,6 +31,9 @@
         "lastName": "Quinn",
         "roles": [
             "User", "Manager"
+        ],
+        "groups": [
+            "Group A"
         ]
     }
 ]

@@ -17,11 +17,11 @@ export const getGroups = BaseEndpoint(async (req: Request, res: Response) => {
 })
 
 export const createGroup = BaseEndpoint(async (req: Request, res: Response) => {
-    let taskRes: Error.ValidationError | Group | null = null;
+    let result: Error.ValidationError | Group | null = null;
     let errors: { [key: string]: string } | null = null;
     const data = matchedData(req);
     try {
-        taskRes = await groupService.createGroup(data.groupName);
+        result = await groupService.createGroup(data.groupName);
     } catch (err) {
         // code 11000 is duplicate unique member
         if (err instanceof MongoServerError && err.code == 11000) {
@@ -32,9 +32,9 @@ export const createGroup = BaseEndpoint(async (req: Request, res: Response) => {
             console.log(err);
         }
     }
-    if (taskRes) {
-        if (taskRes instanceof Error.ValidationError) {
-            errors = formatErrors(taskRes);
+    if (result) {
+        if (result instanceof Error.ValidationError) {
+            errors = formatErrors(result);
             SharedResponses.CreationErrors(res, errors);
         } else {
             GroupResponses.GroupCreated(res, data.groupName);
@@ -45,6 +45,36 @@ export const createGroup = BaseEndpoint(async (req: Request, res: Response) => {
     }
 })
 
-//  TODO: Delete group endpoint
+export const deleteGroup = BaseEndpoint(async (req: Request, res: Response) => {
+    const data = matchedData(req);
+    const result = await GroupModel.findOneAndDelete({ name: data.groupName });
+    if (result) {
+        GroupResponses.GroupDeleted(res, data.groupName);
+    } else {
+        GroupResponses.GroupNotFound(res, data.groupName);
+    }
+})
 
-//  TODOL Update group endpoint
+export const updateGroup = BaseEndpoint(async (req: Request, res: Response) => {
+    let result: Error.ValidationError | Group | null = null;
+    const data = matchedData(req);
+
+    try {
+        result = await GroupModel.findOneAndUpdate({ name: data.groupName }, { name: data.newGroupName });
+    } catch (err) {
+        // code 11000 is duplicate unique member
+        if (err instanceof MongoServerError && err.code == 11000) {
+            SharedResponses.CreationErrors(res, { Nessage: "A group with that name already exists" });
+            return;
+        } else {
+            SharedResponses.InternalServerError(res);
+            console.log(err);
+        }
+    }
+
+    if (result) {
+        GroupResponses.GroupUpdated(res, data.newGroupName);
+    } else {
+        GroupResponses.GroupNotFound(res, data.groupName);
+    }
+})

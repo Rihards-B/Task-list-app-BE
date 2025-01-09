@@ -2,11 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv"
 import { AuthResponses } from "../../responses/AuthResponses";
-import { RoleModel } from "../../models/Role";
 import { JWT } from "../../models/JWT";
 import { UserService } from "../../services/UserService";
 import { User } from "../../models/User";
-import { ReadPreference } from "mongodb";
 
 dotenv.config();
 

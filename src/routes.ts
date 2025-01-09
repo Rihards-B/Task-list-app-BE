@@ -4,6 +4,7 @@ import { userRoutes } from './routes/UserRoutes';
 import { authRoutes } from './routes/AuthRoutes';
 import { roleRoutes } from './routes/RoleRoutes';
 import { groupRoutes } from './routes/GroupRoutes';
+import { translationRoutes } from './routes/TranslationRoutes';
 
 export const routes = Router();
 
@@ -13,3 +14,4 @@ routes.use("/users", userRoutes);
 routes.use("/auth", authRoutes);
 routes.use("/roles/", roleRoutes);
 routes.use("/groups/", groupRoutes);
+routes.use("/translations", translationRoutes);

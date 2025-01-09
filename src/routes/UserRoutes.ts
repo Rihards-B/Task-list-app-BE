@@ -7,7 +7,7 @@ import { EditUserValidationSchema } from '../validators/editUserValidationSchema
 
 export const userRoutes = Router();
 
-userRoutes.get("/", getUsers);
+userRoutes.get("/", validateToken("Admin"), getUsers);
 userRoutes.get("/current", checkSchema(AuthValidationSchema), validateToken(), currentUser);
 userRoutes.get("/:id", validateToken(["Admin"]), getUser);
 userRoutes.put("/:id", checkSchema(EditUserValidationSchema), validateToken(["Admin"]), updateUser);

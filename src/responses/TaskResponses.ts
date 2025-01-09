@@ -6,8 +6,8 @@ export namespace TaskResponses {
         response.status(404).json({ "Message": "Task with ID: " + id + " not found!" });
     }
 
-    export const TaskDeleted = (response: Response, id: string) => {
-        response.status(200).json({ "Message": "Task " + id + " Deleted!" });
+    export const TaskDeleted = (response: Response, task: Task) => {
+        response.status(200).json(task);
     }
 
     export const TaskCreated = (response: Response) => {

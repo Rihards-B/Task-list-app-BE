@@ -6,4 +6,4 @@ import { check } from "express-validator";
 export const groupRoutes = Router();
 
 groupRoutes.get("/", validateToken(["Admin", "Manager"]), getGroups);
-groupRoutes.post("/:groupName", check('groupName').exists().isString().notEmpty(), validateToken(["Admin"]), createGroup);
+groupRoutes.post("/:groupName", check('groupName').exists().isString().notEmpty().isAlphanumeric(), validateToken(["Admin"]), createGroup);

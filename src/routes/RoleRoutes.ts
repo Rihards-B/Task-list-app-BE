@@ -4,4 +4,4 @@ import { validateToken } from "../middleware/auth/validateToken";
 
 export const roleRoutes = Router();
 
-roleRoutes.use("/", validateToken(["Adming", "Manager"]), getRoles);
+roleRoutes.use("/", validateToken(["Admin", "Manager"]), getRoles);

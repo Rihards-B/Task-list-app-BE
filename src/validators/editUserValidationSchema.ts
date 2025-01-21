@@ -52,5 +52,13 @@ export const EditUserValidationSchema = {
         notEmpty: {
             errorMessage: "Roles cannot be empty"
         },
+    },
+    groups: {
+        isArray: {
+            errorMessage: "Groups must be in an array form"
+        },
+        notEmpty: {
+            errorMessage: "Groups cannot be empty"
+        }
     }
 }

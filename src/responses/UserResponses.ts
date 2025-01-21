@@ -25,4 +25,8 @@ export namespace UserResponses {
     export const InvalidRole = (response: Response, role: string) => {
         response.status(400).json({ "msg": "Invalid role: " + role });
     }
+
+    export const InvalidGroup = (response: Response, group: string) => {
+        response.status(400).json({ "msg": "Invalid group: " + group });
+    }
 }

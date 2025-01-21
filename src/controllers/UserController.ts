@@ -5,6 +5,7 @@ import { UserService } from "../services/UserService";
 import { BaseEndpoint } from "./BaseController";
 import { matchedData } from "express-validator";
 import { RoleModel } from "../models/Role";
+import { GroupModel } from "../models/Group";
 
 let userService = new UserService();
 
@@ -38,16 +39,30 @@ export const currentUser = BaseEndpoint(async (req: Request, res: Response) => {
 })
 
 export const updateUser = BaseEndpoint(async (req: Request, res: Response) => {
+    let invalidData: boolean = false;
     const data: User = matchedData(req);
     // Fetching valid roles from DB
     const dbRoles: string[] = (await RoleModel.find()).map(role => role.name);
-    // Check if the passed in roles from FE exist
+    const dbGroups: string[] = (await GroupModel.find()).map(group => group.name);
+
+    // Check if the passed in roles and groups from FE exist
     data.roles.forEach(role => {
         if (!dbRoles.includes(role)) {
+            invalidData = true;
             UserResponses.InvalidRole(res, role);
             return;
         }
     })
-    await userService.updateUser(req.params.id, data)
-    UserResponses.UserUpdated(res, data);
+    data.groups?.forEach(group => {
+        if (!dbGroups.includes(group)) {
+            invalidData = true;
+            UserResponses.InvalidGroup(res, group);
+            return;
+        }
+    })
+
+    if (!invalidData) {
+        await userService.updateUser(req.params.id, data);
+        UserResponses.UserUpdated(res, data);
+    }
 })

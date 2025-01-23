@@ -9,6 +9,7 @@ export interface Task {
   status: string;
   type: string;
   assignedTo?: string;
+  groups?: string[];
 }
 
 // 2. Create a Schema corresponding to the document interface.
@@ -20,6 +21,7 @@ const taskSchema = new Schema<Task>({
   status: { type: String, required: true },
   type: { type: String, required: true },
   assignedTo: String,
+  groups: [String]
 });
 
 // 3. Create a Model.

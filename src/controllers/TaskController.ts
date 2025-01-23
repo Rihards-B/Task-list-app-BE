@@ -6,7 +6,9 @@ import { formatErrors } from "../database/formatErrors";
 import { TaskResponses } from "../responses/TaskResponses";
 import { SharedResponses } from "../responses/SharedResponses";
 import { BaseEndpoint } from "./BaseController";
+import { UserService } from "../services/UserService";
 
+let userService = new UserService();
 let taskService = new TaskService();
 
 export const createTask = BaseEndpoint(async (req: Request, res: Response) => {
@@ -28,9 +30,12 @@ export const createTask = BaseEndpoint(async (req: Request, res: Response) => {
 })
 
 export const getTasks = BaseEndpoint(async (req: Request, res: Response) => {
+    const token = req.cookies.authJWT;
+    const currentUser = await userService.getUser(userService.getUserIdFromToken(token));
     const tasks: Task[] | undefined = await taskService.getTasks();
     if (tasks) {
-        TaskResponses.TasksFound(res, tasks);
+        const filteredTasks = tasks.filter(task => task.groups?.some(group => currentUser?.groups?.includes(group)));
+        TaskResponses.TasksFound(res, filteredTasks);
     }
 })
 

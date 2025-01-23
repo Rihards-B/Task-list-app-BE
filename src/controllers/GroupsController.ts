@@ -59,10 +59,12 @@ export const deleteGroup = BaseEndpoint(async (req: Request, res: Response) => {
 
 export const updateGroup = BaseEndpoint(async (req: Request, res: Response) => {
     let result: Error.ValidationError | Group | null = null;
+
     const data = matchedData(req);
 
     try {
         result = await GroupModel.findOneAndUpdate({ name: data.groupName }, { name: data.newGroupName });
+        await UserModel.updateMany({ groups: { $in: [data.groupName] } }, { $set: { "groups.$": data.newGroupName } });
     } catch (err) {
         // code 11000 is duplicate unique member
         if (err instanceof MongoServerError && err.code == 11000) {

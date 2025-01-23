@@ -1,8 +1,11 @@
 [
     {
-        "name": "Group A"
+        "name": "GroupA"
     },
     {
-        "name": "Group B"
+        "name": "GroupB"
+    },
+    {
+        "name": "GroupC"
     }
 ]

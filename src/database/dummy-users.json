@@ -9,7 +9,7 @@
             "User", "Admin"
         ],
         "groups": [
-            "Group A", "Group B"
+            "GroupA", "GroupB", "GroupC"
         ]
     },
     {
@@ -21,7 +21,7 @@
         "roles": [
             "User"
         ],
-        "groups": []
+        "groups": ["GroupC"]
     },
     {
         "_id": null,
@@ -33,7 +33,7 @@
             "User", "Manager"
         ],
         "groups": [
-            "Group A"
+            "GroupA", "GroupC"
         ]
     }
 ]

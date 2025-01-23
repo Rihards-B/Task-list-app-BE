@@ -40,8 +40,10 @@ export const getTasks = BaseEndpoint(async (req: Request, res: Response) => {
 })
 
 export const getTask = BaseEndpoint(async (req: Request, res: Response) => {
+    const token = req.cookies.authJWT;
+    const currentUser = await userService.getUser(userService.getUserIdFromToken(token));
     const task: Task | undefined = await taskService.getTask(req.params.id);
-    if (task) {
+    if (task && task.groups?.some(group => currentUser?.groups?.includes(group))) {
         TaskResponses.TaskFound(res, task);
     } else {
         TaskResponses.TaskNotFoundID(res, req.params.id);

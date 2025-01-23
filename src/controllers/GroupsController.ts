@@ -8,6 +8,7 @@ import { matchedData } from "express-validator";
 import { formatErrors } from "../database/formatErrors";
 import { SharedResponses } from "../responses/SharedResponses";
 import { MongoServerError } from "mongodb";
+import { UserModel } from "../models/User";
 
 let groupService = new GroupService();
 
@@ -49,6 +50,7 @@ export const deleteGroup = BaseEndpoint(async (req: Request, res: Response) => {
     const data = matchedData(req);
     const result = await GroupModel.findOneAndDelete({ name: data.groupName });
     if (result) {
+        await UserModel.updateMany({ groups: { $in: [data.groupName] } }, { $pull: { groups: { $in: [data.groupName] } } });
         GroupResponses.GroupDeleted(res, data.groupName);
     } else {
         GroupResponses.GroupNotFound(res, data.groupName);

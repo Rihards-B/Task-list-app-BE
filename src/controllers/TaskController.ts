@@ -34,8 +34,12 @@ export const getTasks = BaseEndpoint(async (req: Request, res: Response) => {
     const currentUser = await userService.getUser(userService.getUserIdFromToken(token));
     const tasks: Task[] | undefined = await taskService.getTasks();
     if (tasks) {
-        const filteredTasks = tasks.filter(task => task.groups?.some(group => currentUser?.groups?.includes(group)));
-        TaskResponses.TasksFound(res, filteredTasks);
+        if (currentUser?.roles.includes("Admin")) {
+            TaskResponses.TasksFound(res, tasks);
+        } else {
+            const filteredTasks = tasks.filter(task => task.groups?.some(group => currentUser?.groups?.includes(group)));
+            TaskResponses.TasksFound(res, filteredTasks);
+        }
     }
 })
 
@@ -43,7 +47,7 @@ export const getTask = BaseEndpoint(async (req: Request, res: Response) => {
     const token = req.cookies.authJWT;
     const currentUser = await userService.getUser(userService.getUserIdFromToken(token));
     const task: Task | undefined = await taskService.getTask(req.params.id);
-    if (task && task.groups?.some(group => currentUser?.groups?.includes(group))) {
+    if (task && (task.groups?.some(group => currentUser?.groups?.includes(group)) || currentUser?.roles.includes("Admin"))) {
         TaskResponses.TaskFound(res, task);
     } else {
         TaskResponses.TaskNotFoundID(res, req.params.id);

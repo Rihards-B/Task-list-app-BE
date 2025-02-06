@@ -9,6 +9,7 @@ import { formatErrors } from "../database/formatErrors";
 import { SharedResponses } from "../responses/SharedResponses";
 import { MongoServerError } from "mongodb";
 import { UserModel } from "../models/User";
+import { TaskModel } from "../models/Task";
 
 let groupService = new GroupService();
 
@@ -47,10 +48,14 @@ export const createGroup = BaseEndpoint(async (req: Request, res: Response) => {
 })
 
 export const deleteGroup = BaseEndpoint(async (req: Request, res: Response) => {
+    // Models with groups in them
+    const models = [UserModel, TaskModel];
     const data = matchedData(req);
     const result = await GroupModel.findOneAndDelete({ name: data.groupName });
     if (result) {
-        await UserModel.updateMany({ groups: { $in: [data.groupName] } }, { $pull: { groups: { $in: [data.groupName] } } });
+        models.forEach(async model => {
+            await model.updateMany({ groups: { $in: [data.groupName] } }, { $pull: { groups: { $in: [data.groupName] } } });
+        })
         GroupResponses.GroupDeleted(res, data.groupName);
     } else {
         GroupResponses.GroupNotFound(res, data.groupName);

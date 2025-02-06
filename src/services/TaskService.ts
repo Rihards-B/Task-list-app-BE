@@ -24,19 +24,18 @@ export class TaskService {
         }
     }
 
-    public createTask = async (task: Task): Promise<Task | Error.ValidationError | null> => {
+    public createTask = async (task: Task): Promise<Task | Error | null> => {
         try {
             task.assignedTo = "UNASSIGNED";
             task.createdOn = new Date();
+            task._id = null;
             await TaskModel.validate(task);
             return await TaskModel.create(task);
         } catch (error) {
-            if (error instanceof Error.ValidationError) {
+            if (error instanceof Error) {
                 return error;
-            } else {
-                console.log(error);
-                return null;
             }
+            return null;
         }
     }
 

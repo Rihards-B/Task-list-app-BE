@@ -7,18 +7,23 @@ import { TaskResponses } from "../responses/TaskResponses";
 import { SharedResponses } from "../responses/SharedResponses";
 import { BaseEndpoint } from "./BaseController";
 import { UserService } from "../services/UserService";
+import { GroupService } from "../services/GroupService";
+import { GroupResponses } from "../responses/GroupResponses";
 
 let userService = new UserService();
 let taskService = new TaskService();
+let groupService = new GroupService();
 
 export const createTask = BaseEndpoint(async (req: Request, res: Response) => {
     let errors: { [key: string]: string } | null = null;
-    const requestBody = await req.body;
-    requestBody._id = null;
-    const taskRes: Error.ValidationError | Task | null = await taskService.createTask(requestBody);
-    if (taskRes) {
-        if (taskRes instanceof Error.ValidationError) {
-            errors = formatErrors(taskRes);
+    let result: Error | Task | null = null;
+    const requestBody: Task = await req.body;
+
+    result = await taskService.createTask(requestBody);
+
+    if (result) {
+        if (result instanceof Error.ValidationError) {
+            errors = formatErrors(result);
             SharedResponses.CreationErrors(res, errors);
         } else {
             TaskResponses.TaskCreated(res);
@@ -65,7 +70,8 @@ export const deleteTask = BaseEndpoint(async (req: Request, res: Response) => {
 
 export const updateTask = BaseEndpoint(async (req: Request, res: Response) => {
     let errors: { [key: string]: string } | null = null;
-    const requestBody = await req.body;
+    const requestBody: Task = await req.body;
+
     const taskRes: Error.ValidationError | Task | null = await taskService.updateTask(requestBody);
     if (taskRes) {
         if (taskRes instanceof Error.ValidationError) {

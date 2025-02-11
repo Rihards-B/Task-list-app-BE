@@ -46,7 +46,7 @@ export const getTask = BaseEndpoint(async (req: Request, res: Response) => {
 export const deleteTask = BaseEndpoint(async (req: Request, res: Response) => {
     const result = await taskService.deleteTask(req.params.id);
     if (result) {
-        TaskResponses.TaskDeleted(res, req.params.id);
+        TaskResponses.TaskDeleted(res, result);
     } else {
         TaskResponses.TaskNotFoundID(res, req.params.id);
     }

@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv"
 import { AuthResponses } from "../../responses/AuthResponses";
-import { RoleModel } from "../../models/Role";
 import { JWT } from "../../models/JWT";
 import { UserService } from "../../services/UserService";
 import { User } from "../../models/User";
@@ -44,7 +43,7 @@ export const validateToken = (roleName?: string) => {
 }
 
 async function checkRole(user: User, roleName: string): Promise<boolean> {
-  if (user.roles.find(role => role == "Admin")) {
+  if (user.roles.find(role => role === roleName)) {
     return true;
   }
   return false

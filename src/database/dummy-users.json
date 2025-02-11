@@ -35,5 +35,27 @@
         "groups": [
             "GroupA", "GroupC"
         ]
+    },
+    {
+        "_id": null,
+        "username": "TestUserEmpty",
+        "password": "$2b$10$AeBAOtgGJxxRcUvrq/j7R.XSrGr9kXksjpxXzrOBDzvIQyx05YSj.",
+        "firstName": "Test",
+        "lastName": "User",
+        "roles": [
+            "User"
+        ],
+        "groups": []
+    },
+    {
+        "_id": null,
+        "username": "TestUserEmptyAdmin",
+        "password": "$2b$10$AeBAOtgGJxxRcUvrq/j7R.XSrGr9kXksjpxXzrOBDzvIQyx05YSj.",
+        "firstName": "Test",
+        "lastName": "User",
+        "roles": [
+            "User", "Admin"
+        ],
+        "groups": []
     }
 ]

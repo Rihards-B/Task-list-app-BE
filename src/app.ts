@@ -20,4 +20,3 @@ app.use(cookieParser());
 app.use(routes);
 
 export default app
-

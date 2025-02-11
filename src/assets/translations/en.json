@@ -38,5 +38,9 @@
     "en": "English",
     "lv": "Latvian",
     "form.input.confirm.password": "Confirm password",
-    "form.input.passwords.must.match": "Passwords have to match"
+    "form.input.passwords.must.match": "Passwords have to match",
+    "add": "Add",
+    "input.group.name": "Add new group",
+    "groups": "Groups",
+    "form.input.group.title.unique": "Group title must be unique"
 }

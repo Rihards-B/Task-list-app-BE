@@ -18,7 +18,7 @@ export const CreateTaskValidationSchema = {
             errorMessage: "Status cannot be empty"
         },
         isIn: {
-            options: [["Incomplete", "Complete"]],
+            options: [["incomplete", "complete"]],
             errorMessage: "Status has to be 'Incomplete' or 'Complete'"
         }
     },

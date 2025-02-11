@@ -5,16 +5,18 @@ import mongoose from "mongoose"
 import { User } from "../../src/models/User"
 import { Task } from "../../src/models/Task"
 import TestAgent from "supertest/lib/agent"
+import { initialize } from "../database/initialize"
 
 describe('TaskController', () => {
     let agentInstance: TestAgent;
 
     beforeAll(() => {
-        const DB_URI = process.env.DB_URI;
-        if (DB_URI) {
-            connectToDB(DB_URI);
+        const DB_TEST_URI = process.env.DB_TEST_URI;
+        if (DB_TEST_URI) {
+            connectToDB(DB_TEST_URI);
+            initialize();
         } else {
-            console.log("No DB_UDI available");
+            console.log("No DB_TEST_URI available");
         }
     })
 
@@ -32,13 +34,13 @@ describe('TaskController', () => {
     })
 
     test('should return 200 if logged in', async () => {
-        await agentInstance.post("/auth/login").send({ username: "Rihards-B", password: "password" })
+        await agentInstance.post("/auth/login").send({ username: "TestUser", password: "password" }).expect(200)
         const res = await agentInstance.get("/tasks")
         expect(res.status).toBe(200);
     })
 
     test('should only fetch tasks with the same groups as user', async () => {
-        const loginRes = await agentInstance.post("/auth/login").send({ username: "John321", password: "password" }).expect(200);
+        const loginRes = await agentInstance.post("/auth/login").send({ username: "TestUser", password: "password" }).expect(200);
         const tasksRes = await agentInstance.get("/tasks").expect(200);
 
         const user: User = loginRes.body.user;
@@ -52,7 +54,7 @@ describe('TaskController', () => {
     })
 
     test('all tasks should be returned if user is admin', async () => {
-        const loginRes = await agentInstance.post("/auth/login").send({ username: "TestUserEmptyAdmin", password: "password" }).expect(200);
+        const loginRes = await agentInstance.post("/auth/login").send({ username: "TestUserNoGroupsAdmin", password: "password" }).expect(200);
         const tasksRes = await agentInstance.get("/tasks").expect(200);
 
         const user: User = loginRes.body.user;
@@ -63,7 +65,7 @@ describe('TaskController', () => {
     })
 
     test('a user without groups should not find any tasks', async () => {
-        const loginRes = await agentInstance.post("/auth/login").send({ username: "TestUserEmpty", password: "password" }).expect(200);
+        const loginRes = await agentInstance.post("/auth/login").send({ username: "TestUserNoGroups", password: "password" }).expect(200);
         const tasksRes = await agentInstance.get("/tasks").expect(200);
 
         const user: User = loginRes.body.user;

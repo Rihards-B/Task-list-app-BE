@@ -10,18 +10,15 @@ import { initialize } from "../database/initialize"
 describe('TaskController', () => {
     let agentInstance: TestAgent;
 
-    beforeAll(() => {
+    beforeEach(async () => {
+        agentInstance = request.agent(app);
         const DB_TEST_URI = process.env.DB_TEST_URI;
         if (DB_TEST_URI) {
             connectToDB(DB_TEST_URI);
-            initialize();
+            await initialize();
         } else {
             console.log("No DB_TEST_URI available");
         }
-    })
-
-    beforeEach(() => {
-        agentInstance = request.agent(app);
     })
 
     afterAll(() => {

@@ -1,5 +1,5 @@
-import { Group, GroupModel } from "../models/Group";
 import { CreateTaskUniqueTitleValidator } from "./createTaskUniqueTitleValidator";
+import { GroupsExistsValidator } from "./groupsExistsValidator";
 
 export const CreateTaskValidationSchema = {
     title: {
@@ -33,14 +33,7 @@ export const CreateTaskValidationSchema = {
     },
     groups: {
         custom: {
-            options: async (value: string[]) => {
-                const backendGroups: Group[] = await GroupModel.find();
-                value.forEach(group => {
-                    if (!backendGroups.find(backendGroup => backendGroup.name === group)) {
-                        throw new Error('Group ' + group + ' does not exist');
-                    }
-                })
-            }
+            options: GroupsExistsValidator
         }
     }
 }

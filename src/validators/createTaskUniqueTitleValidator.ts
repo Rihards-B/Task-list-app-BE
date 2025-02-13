@@ -6,5 +6,4 @@ export const CreateTaskUniqueTitleValidator: CustomValidator = async (value) => 
     if (taskInDB) {
         throw new Error("Title must be unique");
     }
-
 }

@@ -7,7 +7,7 @@
     "login": "Ienākt",
     "logout": "Iziet",
     "home": "Sākums",
-    "invalidCredentials": "Nepareizs lietotājvārds un/vai parole",
+    "auth.invalid.credentials": "Nepareizs lietotājvārds un/vai parole",
     "form.input.longer.than": "Laukam {{label}} jābūt garākam par {{min}} simboliem",
     "form.input.shorter.than": "Laukam {{label}} jābūt īsākam par {{max}} simboliem",
     "form.input.empty": "Lauks nevar būt tukšs",

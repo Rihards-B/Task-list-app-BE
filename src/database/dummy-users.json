@@ -5,12 +5,8 @@
         "password": "$2b$10$AeBAOtgGJxxRcUvrq/j7R.XSrGr9kXksjpxXzrOBDzvIQyx05YSj.",
         "firstName": "Rihards",
         "lastName": "Blekus",
-        "roles": [
-            "User", "Admin"
-        ],
-        "groups": [
-            "GroupA", "GroupB", "GroupC"
-        ]
+        "roles": ["User", "Admin"],
+        "groups": ["GroupA", "GroupB", "GroupC"]
     },
     {
         "_id": null,
@@ -18,9 +14,7 @@
         "password": "$2b$10$AeBAOtgGJxxRcUvrq/j7R.XSrGr9kXksjpxXzrOBDzvIQyx05YSj.",
         "firstName": "John",
         "lastName": "Gill",
-        "roles": [
-            "User"
-        ],
+        "roles": ["User"],
         "groups": ["GroupC"]
     },
     {
@@ -29,33 +23,7 @@
         "password": "$2b$10$AeBAOtgGJxxRcUvrq/j7R.XSrGr9kXksjpxXzrOBDzvIQyx05YSj.",
         "firstName": "Robin",
         "lastName": "Quinn",
-        "roles": [
-            "User", "Manager"
-        ],
-        "groups": [
-            "GroupA", "GroupC"
-        ]
-    },
-    {
-        "_id": null,
-        "username": "TestUserEmpty",
-        "password": "$2b$10$AeBAOtgGJxxRcUvrq/j7R.XSrGr9kXksjpxXzrOBDzvIQyx05YSj.",
-        "firstName": "Test",
-        "lastName": "User",
-        "roles": [
-            "User"
-        ],
-        "groups": []
-    },
-    {
-        "_id": null,
-        "username": "TestUserEmptyAdmin",
-        "password": "$2b$10$AeBAOtgGJxxRcUvrq/j7R.XSrGr9kXksjpxXzrOBDzvIQyx05YSj.",
-        "firstName": "Test",
-        "lastName": "User",
-        "roles": [
-            "User", "Admin"
-        ],
-        "groups": []
+        "roles": ["User", "Manager"],
+        "groups": ["GroupA", "GroupC"]
     }
 ]

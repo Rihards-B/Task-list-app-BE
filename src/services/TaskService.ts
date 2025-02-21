@@ -72,7 +72,6 @@ export class TaskService {
 
     public updateTaskAssignment = async (id: string, groups?: string[], assignedTo?: string): Promise<Task | Error.ValidationError | null> => {
         try {
-            console.log(groups, assignedTo);
             return await TaskModel.findByIdAndUpdate(id, { groups: groups, assignedTo: assignedTo });
         } catch (error) {
             if (error instanceof Error.ValidationError) {

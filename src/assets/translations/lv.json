@@ -7,7 +7,7 @@
     "login": "Ienākt",
     "logout": "Iziet",
     "home": "Sākums",
-    "invalidCredentials": "Nepareizs lietotājvārds un/vai parole",
+    "auth.invalid.credentials": "Nepareizs lietotājvārds un/vai parole",
     "form.input.longer.than": "Laukam {{label}} jābūt garākam par {{min}} simboliem",
     "form.input.shorter.than": "Laukam {{label}} jābūt īsākam par {{max}} simboliem",
     "form.input.empty": "Lauks nevar būt tukšs",
@@ -38,5 +38,9 @@
     "en": "Angļu",
     "lv": "Latviešu",
     "form.input.confirm.password": "Atkārtot paroli",
-    "form.input.passwords.must.match": "Parolēm ir jāsakrīt"
+    "form.input.passwords.must.match": "Parolēm ir jāsakrīt",
+    "add": "Pievienot",
+    "input.group.name": "Pievienot jaunu grupu",
+    "groups": "Grupas",
+    "form.input.group.title.unique": "Grupas nosaukumam ir jābūt unikālam"
 }

@@ -13,4 +13,8 @@ export namespace SharedResponses {
     export const ValidationError = (response: Response, errors: ValidationError[]) => {
         response.status(400).json(errors);
     }
+
+    export const CreationErrors = (response: Response, errors: { [key: string]: string }) => {
+        response.status(400).json(errors);
+    }
 }

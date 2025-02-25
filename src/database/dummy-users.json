@@ -5,9 +5,8 @@
         "password": "$2b$10$AeBAOtgGJxxRcUvrq/j7R.XSrGr9kXksjpxXzrOBDzvIQyx05YSj.",
         "firstName": "Rihards",
         "lastName": "Blekus",
-        "roles": [
-            "User", "Admin"
-        ]
+        "roles": ["User", "Admin"],
+        "groups": ["GroupA", "GroupB", "GroupC"]
     },
     {
         "_id": null,
@@ -15,9 +14,8 @@
         "password": "$2b$10$AeBAOtgGJxxRcUvrq/j7R.XSrGr9kXksjpxXzrOBDzvIQyx05YSj.",
         "firstName": "John",
         "lastName": "Gill",
-        "roles": [
-            "User"
-        ]
+        "roles": ["User"],
+        "groups": ["GroupC"]
     },
     {
         "_id": null,
@@ -25,8 +23,7 @@
         "password": "$2b$10$AeBAOtgGJxxRcUvrq/j7R.XSrGr9kXksjpxXzrOBDzvIQyx05YSj.",
         "firstName": "Robin",
         "lastName": "Quinn",
-        "roles": [
-            "User", "Manager"
-        ]
+        "roles": ["User", "Manager"],
+        "groups": ["GroupA", "GroupC"]
     }
 ]

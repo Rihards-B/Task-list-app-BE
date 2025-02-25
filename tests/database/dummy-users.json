@@ -1,0 +1,29 @@
+[
+    {
+        "_id": null,
+        "username": "TestUser",
+        "password": "$2b$10$AeBAOtgGJxxRcUvrq/j7R.XSrGr9kXksjpxXzrOBDzvIQyx05YSj.",
+        "firstName": "Test",
+        "lastName": "User",
+        "roles": ["User"],
+        "groups": ["GroupA"]
+    },
+    {
+        "_id": null,
+        "username": "TestUserNoGroups",
+        "password": "$2b$10$AeBAOtgGJxxRcUvrq/j7R.XSrGr9kXksjpxXzrOBDzvIQyx05YSj.",
+        "firstName": "Test",
+        "lastName": "User",
+        "roles": ["User"],
+        "groups": []
+    },
+    {
+        "_id": null,
+        "username": "TestUserNoGroupsAdmin",
+        "password": "$2b$10$AeBAOtgGJxxRcUvrq/j7R.XSrGr9kXksjpxXzrOBDzvIQyx05YSj.",
+        "firstName": "Test",
+        "lastName": "User",
+        "roles": ["User", "Admin"],
+        "groups": []
+    }
+]

@@ -10,7 +10,7 @@ dotenv.config();
 
 const userService = new UserService();
 
-export const validateToken = (roleName?: string) => {
+export const validateToken = (roleNames?: string[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (req.cookies.authJWT) {
@@ -18,10 +18,10 @@ export const validateToken = (roleName?: string) => {
         if (SESSION_SECRET) {
           const userData: JWT = jwt.verify(req.cookies.authJWT, SESSION_SECRET) as JWT;
           // If roleName is passed in then check if user has that role
-          if (roleName) {
+          if (roleNames) {
             const sessionUser = await userService.getUser(userData.userID);
             if (sessionUser) {
-              if (await checkRole(sessionUser, roleName)) {
+              if (await checkRoles(sessionUser, roleNames)) {
                 next();
                 return;
               }
@@ -30,7 +30,7 @@ export const validateToken = (roleName?: string) => {
             // If no roleName is passed as argument, just check if JWT is valid
             if (userData) {
               next();
-              return
+              return;
             }
           }
         }
@@ -42,9 +42,11 @@ export const validateToken = (roleName?: string) => {
   }
 }
 
-async function checkRole(user: User, roleName: string): Promise<boolean> {
-  if (user.roles.find(role => role === roleName)) {
-    return true;
+async function checkRoles(user: User, roleNames: string[]): Promise<boolean> {
+  for (const roleName of roleNames) {
+    if (user.roles.find(role => role == roleName)) {
+      return true;
+    }
   }
   return false
 }
